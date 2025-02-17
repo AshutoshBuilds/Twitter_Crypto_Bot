@@ -1,0 +1,285 @@
+{
+  "timestamp": "2025-02-12 01:31:08",
+  "data": [
+    {
+      "token": "ethereum",
+      "twitter_stats": {
+        "username": "ethereum",
+        "followers_count": 0,
+        "bio": "Ethereum is the world computer. The universal platform for cryptocurrencies, blockchain apps, stablecoins, and decentralized technologies.",
+        "verified": true,
+        "engagement_rate": 0.001,
+        "twitter_score": 0
+      },
+      "market_data": {
+        "price": 2592.99,
+        "price_change_24h": -2.915,
+        "market_cap": 311158800000.0,
+        "source": "binance"
+      },
+      "follower_metrics": {
+        "total_followers": 0,
+        "change_1h": 0,
+        "change_24h": 0,
+        "pct_change_1h": 0,
+        "pct_change_24h": 0,
+        "growth_rate": -6894780.944058541,
+        "growth_status": "Stable",
+        "hourly_rate": -6894780.944058541,
+        "is_spiking": false
+      }
+    },
+    {
+      "token": "bitcoin",
+      "twitter_stats": {
+        "username": "bitcoin",
+        "followers_count": 0,
+        "bio": "Bitcoin is an open source censorship-resistant peer-to-peer immutable network. Trackable digital gold. Don't trust; verify. Not your keys; not your coins.",
+        "verified": true,
+        "engagement_rate": 0.001,
+        "twitter_score": 0
+      },
+      "market_data": {
+        "price": 95054.98,
+        "price_change_24h": -2.334,
+        "market_cap": 1806044620000.0,
+        "source": "binance"
+      },
+      "follower_metrics": {
+        "total_followers": 0,
+        "change_1h": 0,
+        "change_24h": 0,
+        "pct_change_1h": 0,
+        "pct_change_24h": 0,
+        "growth_rate": -14398325.424251221,
+        "growth_status": "Stable",
+        "hourly_rate": -14398325.424251221,
+        "is_spiking": false
+      }
+    },
+    {
+      "token": "binance",
+      "twitter_stats": {
+        "username": "binance",
+        "followers_count": 0,
+        "bio": "The world’s leading blockchain ecosystem and digital asset exchange | #Binance #BNB | Support: @BinanceHelpDesk | Posts are not directed towards UK users.",
+        "verified": true,
+        "engagement_rate": 0.001,
+        "twitter_score": 0
+      },
+      "market_data": {
+        "price": 628.4,
+        "price_change_24h": 2.645,
+        "market_cap": 97402000000.0,
+        "source": "binance"
+      },
+      "follower_metrics": {
+        "total_followers": 0,
+        "change_1h": 0,
+        "change_24h": 0,
+        "pct_change_1h": 0,
+        "pct_change_24h": 0,
+        "growth_rate": -27015927.606147252,
+        "growth_status": "Stable",
+        "hourly_rate": -27015927.606147252,
+        "is_spiking": false
+      }
+    },
+    {
+      "token": "dogecoin",
+      "twitter_stats": {
+        "username": "dogecoin",
+        "followers_count": 0,
+        "bio": "Dogecoin is an open source peer-to-peer cryptocurrency, favored by shibas worldwide. Elon Musk thinks we're pretty cool. [RTs are not endorsements]",
+        "verified": true,
+        "engagement_rate": 0.001,
+        "twitter_score": 0
+      },
+      "market_data": {
+        "price": 0.25074,
+        "price_change_24h": -0.956,
+        "market_cap": 35103600000.0,
+        "source": "binance"
+      },
+      "follower_metrics": {
+        "total_followers": 0,
+        "change_1h": 0,
+        "change_24h": 0,
+        "pct_change_1h": 0,
+        "pct_change_24h": 0,
+        "growth_rate": -8320813.666458524,
+        "growth_status": "Stable",
+        "hourly_rate": -8320813.666458524,
+        "is_spiking": false
+      }
+    },
+    {
+      "token": "cardano",
+      "twitter_stats": {
+        "username": "cardano",
+        "followers_count": 0,
+        "bio": "Cardano: science-based open-source, patent-free protocols for storing/managing value, identity, governance | supported by @Cardano_CF | TG https://t.me/Cardano",
+        "verified": true,
+        "engagement_rate": 0.001,
+        "twitter_score": 0
+      },
+      "market_data": {
+        "price": 0.7621,
+        "price_change_24h": 9.012,
+        "market_cap": 26673500000.0,
+        "source": "binance"
+      },
+      "follower_metrics": {
+        "total_followers": 0,
+        "change_1h": 0,
+        "change_24h": 0,
+        "pct_change_1h": 0,
+        "pct_change_24h": 0,
+        "growth_rate": -2726994.240518767,
+        "growth_status": "Stable",
+        "hourly_rate": -2726994.240518767,
+        "is_spiking": false
+      }
+    },
+    {
+      "token": "solana",
+      "twitter_stats": {
+        "username": "solana",
+        "followers_count": 0,
+        "bio": "Solana is a blockchain built for mass adoption ◎ Fast, composable, green, and globally distributed. X by @SolanaFndn",
+        "verified": true,
+        "engagement_rate": 0.001,
+        "twitter_score": 0
+      },
+      "market_data": {
+        "price": 195.78,
+        "price_change_24h": -2.699,
+        "market_cap": 80269800000.0,
+        "source": "binance"
+      },
+      "follower_metrics": {
+        "total_followers": 0,
+        "change_1h": 0,
+        "change_24h": 0,
+        "pct_change_1h": 0,
+        "pct_change_24h": 0,
+        "growth_rate": -6248403.724609325,
+        "growth_status": "Stable",
+        "hourly_rate": -6248403.724609325,
+        "is_spiking": false
+      }
+    },
+    {
+      "token": "ripple",
+      "twitter_stats": {
+        "username": "ripple",
+        "followers_count": 0,
+        "bio": "Our mission is to build breakthrough crypto solutions for a world without economic borders.",
+        "verified": true,
+        "engagement_rate": 0.001,
+        "twitter_score": 0
+      },
+      "market_data": {
+        "price": 2.3914,
+        "price_change_24h": -1.247,
+        "market_cap": 239140000000.0,
+        "source": "binance"
+      },
+      "follower_metrics": {
+        "total_followers": 0,
+        "change_1h": 0,
+        "change_24h": 0,
+        "pct_change_1h": 0,
+        "pct_change_24h": 0,
+        "growth_rate": -5887474.743232819,
+        "growth_status": "Stable",
+        "hourly_rate": -5887474.743232819,
+        "is_spiking": false
+      }
+    },
+    {
+      "token": "polkadot",
+      "twitter_stats": {
+        "username": "polkadot",
+        "followers_count": 0,
+        "bio": "The powerful, secure core of Web3 for boundary-defying developers.",
+        "verified": true,
+        "engagement_rate": 0.001,
+        "twitter_score": 0
+      },
+      "market_data": {
+        "price": 4.762,
+        "price_change_24h": -1.855,
+        "market_cap": 5714399999.999999,
+        "source": "binance"
+      },
+      "follower_metrics": {
+        "total_followers": 0,
+        "change_1h": 0,
+        "change_24h": 0,
+        "pct_change_1h": 0,
+        "pct_change_24h": 0,
+        "growth_rate": -2951634.671677128,
+        "growth_status": "Stable",
+        "hourly_rate": -2951634.671677128,
+        "is_spiking": false
+      }
+    },
+    {
+      "token": "avalanche",
+      "twitter_stats": {
+        "username": "avalanche",
+        "followers_count": 0,
+        "bio": "Force of Nature vs. Everyone #GoAvsGo",
+        "verified": true,
+        "engagement_rate": 0.001,
+        "twitter_score": 0
+      },
+      "market_data": {
+        "price": 25.05,
+        "price_change_24h": -1.456,
+        "market_cap": 8767500000.0,
+        "source": "binance"
+      },
+      "follower_metrics": {
+        "total_followers": 0,
+        "change_1h": 0,
+        "change_24h": 0,
+        "pct_change_1h": 0,
+        "pct_change_24h": 0,
+        "growth_rate": -1327235.5074478467,
+        "growth_status": "Stable",
+        "hourly_rate": -1327235.5074478467,
+        "is_spiking": false
+      }
+    },
+    {
+      "token": "chainlink",
+      "twitter_stats": {
+        "username": "chainlink",
+        "followers_count": 0,
+        "bio": "Chainlink is the standard for onchain finance.",
+        "verified": true,
+        "engagement_rate": 0.001,
+        "twitter_score": 0
+      },
+      "market_data": {
+        "price": 18.45,
+        "price_change_24h": -1.966,
+        "market_cap": 10147500000.0,
+        "source": "binance"
+      },
+      "follower_metrics": {
+        "total_followers": 0,
+        "change_1h": 0,
+        "change_24h": 0,
+        "pct_change_1h": 0,
+        "pct_change_24h": 0,
+        "growth_rate": -2379933.96896669,
+        "growth_status": "Stable",
+        "hourly_rate": -2379933.96896669,
+        "is_spiking": false
+      }
+    }
+  ]
+}

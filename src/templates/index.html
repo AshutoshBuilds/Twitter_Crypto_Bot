@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Twitter Monitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .table-header {
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
+        .table-row:hover {
+            background-color: #f1f5f9;
+        }
+        .metric-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .status-badge {
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+        }
+        .growth-positive {
+            color: #059669;
+            background-color: #d1fae5;
+        }
+        .growth-negative {
+            color: #dc2626;
+            background-color: #fee2e2;
+        }
+        .growth-neutral {
+            color: #4b5563;
+            background-color: #f3f4f6;
+        }
+        .growth-spike {
+            color: #7c3aed;
+            background-color: #ede9fe;
+        }
+        /* Text truncation styles */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .break-words {
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+        /* Table layout */
+        .table-fixed {
+            table-layout: fixed;
+        }
+        .max-w-xs {
+            max-width: 20rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-4xl font-bold text-slate-900 mb-2">Crypto Twitter Monitor</h1>
+                <p class="text-slate-600">Track follower growth and engagement metrics</p>
+            </div>
+            <div class="text-sm text-slate-500 bg-white px-4 py-2 rounded-lg shadow">
+                Last updated: {{ last_update }}
+            </div>
+        </div>
+
+        <!-- Alerts Section -->
+        {% if alerts %}
+        <div class="mb-8">
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg shadow-sm">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-lg font-semibold text-amber-800">Activity Alerts</h3>
+                        <div class="mt-2 space-y-2">
+                            {% for alert in alerts %}
+                            <p class="text-amber-700">{{ alert }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Controls -->
+        <div class="flex items-center space-x-4 mb-6">
+            <button class="venture-btn px-4 py-2 rounded-lg text-white flex items-center">
+                Venture Capitals
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </button>
+            <button class="score-range-btn px-4 py-2 rounded-lg text-white flex items-center">
+                Set score range
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </button>
+            <button class="watchlist-btn px-4 py-2 rounded-lg text-white flex items-center">
+                ★ Watchlist
+            </button>
+        </div>
+
+        <!-- Leaderboard Table -->
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full table-fixed divide-y divide-slate-200">
+                    <thead class="table-header">
+                        <tr>
+                            <th class="w-2/6 px-6 py-4 text-left text-sm font-semibold">Account</th>
+                            <th class="w-1/6 px-6 py-4 text-left text-sm font-semibold">Market Data</th>
+                            <th class="w-1/6 px-6 py-4 text-left text-sm font-semibold">Followers</th>
+                            <th class="w-1/6 px-6 py-4 text-left text-sm font-semibold">Growth</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        {% for entry in leaderboard %}
+                        <tr class="table-row hover:bg-slate-50">
+                            <!-- Account Info -->
+                            <td class="px-6 py-4 max-w-xs">
+                                <div class="flex items-center space-x-3">
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center space-x-2">
+                                            <p class="text-sm font-medium text-slate-900 truncate">{{ entry.username }}</p>
+                                            {% if entry.verified %}
+                                            <svg class="h-5 w-5 flex-shrink-0 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                            </svg>
+                                            {% endif %}
+                                        </div>
+                                        <div class="mt-1">
+                                            <p class="text-sm text-slate-500 line-clamp-2 break-words">{{ entry.bio }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Market Data -->
+                            <td class="px-6 py-4">
+                                <div class="market-data">
+                                    <div class="price">
+                                        <span class="label">Price:</span>
+                                        <span class="value">${{ "%.2f"|format(entry.price) }}</span>
+                                    </div>
+                                    <div class="price-change">
+                                        <span class="label">24h Change:</span>
+                                        <span class="value {% if entry.price_change_24h > 0 %}positive{% elif entry.price_change_24h < 0 %}negative{% endif %}">
+                                            {{ "%.2f"|format(entry.price_change_24h) }}%
+                                        </span>
+                                    </div>
+                                    <div class="market-cap">
+                                        <span class="label">Market Cap:</span>
+                                        <span class="value">${{ "{:,.0f}".format(entry.market_cap) }}</span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Followers -->
+                            <td class="px-6 py-4">
+                                <div class="metric-card p-3">
+                                    <div class="text-xl font-bold text-slate-900">{{ entry.followers_count | format_number }}</div>
+                                    <div class="text-xs text-slate-500 mt-1">
+                                        Engagement: {{ "{:.1f}%".format(entry.engagement_rate * 100) }}
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Growth Metrics -->
+                            <td class="px-6 py-4">
+                                <div class="bg-slate-50 rounded-lg p-3 space-y-3">
+                                    <!-- Status Badge -->
+                                    <div class="status-badge 
+                                        {% if entry.growth_status == '🚀 Spiking' %}growth-spike
+                                        {% elif 'Fast' in entry.growth_status %}growth-positive
+                                        {% elif 'Growing' in entry.growth_status %}growth-positive
+                                        {% elif 'Declining' in entry.growth_status %}growth-negative
+                                        {% else %}growth-neutral{% endif %}">
+                                        {{ entry.growth_status }}
+                                    </div>
+
+                                    <!-- Growth Periods -->
+                                    <div class="grid grid-cols-2 gap-2 text-xs">
+                                        <div class="status-badge {% if entry.growth_5m > 0 %}growth-positive{% elif entry.growth_5m < 0 %}growth-negative{% else %}growth-neutral{% endif %}">
+                                            5m: {% if entry.growth_5m > 0 %}+{% endif %}{{ "%.2f"|format(entry.growth_5m) }}%
+                                        </div>
+                                        <div class="status-badge {% if entry.growth_15m > 0 %}growth-positive{% elif entry.growth_15m < 0 %}growth-negative{% else %}growth-neutral{% endif %}">
+                                            15m: {% if entry.growth_15m > 0 %}+{% endif %}{{ "%.2f"|format(entry.growth_15m) }}%
+                                        </div>
+                                        <div class="status-badge {% if entry.growth_30m > 0 %}growth-positive{% elif entry.growth_30m < 0 %}growth-negative{% else %}growth-neutral{% endif %}">
+                                            30m: {% if entry.growth_30m > 0 %}+{% endif %}{{ "%.2f"|format(entry.growth_30m) }}%
+                                        </div>
+                                        <div class="status-badge {% if entry.growth_1h > 0 %}growth-positive{% elif entry.growth_1h < 0 %}growth-negative{% else %}growth-neutral{% endif %}">
+                                            1h: {% if entry.growth_1h > 0 %}+{% endif %}{{ "%.2f"|format(entry.growth_1h) }}%
+                                        </div>
+                                        <div class="status-badge {% if entry.growth_4h > 0 %}growth-positive{% elif entry.growth_4h < 0 %}growth-negative{% else %}growth-neutral{% endif %}">
+                                            4h: {% if entry.growth_4h > 0 %}+{% endif %}{{ "%.2f"|format(entry.growth_4h) }}%
+                                        </div>
+                                        <div class="status-badge {% if entry.growth_6h > 0 %}growth-positive{% elif entry.growth_6h < 0 %}growth-negative{% else %}growth-neutral{% endif %}">
+                                            6h: {% if entry.growth_6h > 0 %}+{% endif %}{{ "%.2f"|format(entry.growth_6h) }}%
+                                        </div>
+                                        <div class="status-badge {% if entry.growth_12h > 0 %}growth-positive{% elif entry.growth_12h < 0 %}growth-negative{% else %}growth-neutral{% endif %}">
+                                            12h: {% if entry.growth_12h > 0 %}+{% endif %}{{ "%.2f"|format(entry.growth_12h) }}%
+                                        </div>
+                                        <div class="status-badge {% if entry.growth_18h > 0 %}growth-positive{% elif entry.growth_18h < 0 %}growth-negative{% else %}growth-neutral{% endif %}">
+                                            18h: {% if entry.growth_18h > 0 %}+{% endif %}{{ "%.2f"|format(entry.growth_18h) }}%
+                                        </div>
+                                        <div class="status-badge {% if entry.growth_24h > 0 %}growth-positive{% elif entry.growth_24h < 0 %}growth-negative{% else %}growth-neutral{% endif %}">
+                                            24h: {% if entry.growth_24h > 0 %}+{% endif %}{{ "%.2f"|format(entry.growth_24h) }}%
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tooltip for Twitter Score
+        const tooltip = document.createElement('div');
+        tooltip.className = 'fixed bg-black text-white p-4 rounded-lg shadow-lg max-w-xs z-50';
+        tooltip.style.display = 'none';
+        document.body.appendChild(tooltip);
+
+        document.querySelector('th:nth-child(8)').addEventListener('mouseover', (e) => {
+            tooltip.textContent = 'Twitter Score represents how popular this twitter account in the crypto, relative to the most popular crypto project, which is @Ethereum';
+            tooltip.style.display = 'block';
+            tooltip.style.left = e.pageX + 'px';
+            tooltip.style.top = (e.pageY + 20) + 'px';
+        });
+
+        document.querySelector('th:nth-child(8)').addEventListener('mouseout', () => {
+            tooltip.style.display = 'none';
+        });
+
+        // Auto-refresh every 5 minutes
+        setInterval(function() {
+            fetch('/api/leaderboard')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.data) {
+                        window.location.reload();
+                    }
+                });
+        }, 300000);
+    </script>
+</body>
+</html>

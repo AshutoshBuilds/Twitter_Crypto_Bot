@@ -1,0 +1,582 @@
+{
+    "ethereum": [
+        {
+            "timestamp": 1739302188.158567,
+            "followers": 3600000
+        },
+        {
+            "timestamp": 1739302342.201521,
+            "followers": 3600000
+        },
+        {
+            "timestamp": 1739302709.316877,
+            "followers": 3600000
+        },
+        {
+            "timestamp": 1739303072.857514,
+            "followers": 3600000
+        },
+        {
+            "timestamp": 1739303436.797685,
+            "followers": 3600000
+        },
+        {
+            "timestamp": 1739303552.000481,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303756.703728,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303868.069556,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304067.8412,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304228.649579,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304535.114641,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304842.562503,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304902,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304970,
+            "followers": 0
+        }
+    ],
+    "bitcoin": [
+        {
+            "timestamp": 1739302192.971192,
+            "followers": 7500000
+        },
+        {
+            "timestamp": 1739302346.81065,
+            "followers": 7500000
+        },
+        {
+            "timestamp": 1739302713.90501,
+            "followers": 7500000
+        },
+        {
+            "timestamp": 1739303077.365412,
+            "followers": 7500000
+        },
+        {
+            "timestamp": 1739303441.322376,
+            "followers": 7500000
+        },
+        {
+            "timestamp": 1739303552.165629,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303756.560243,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303867.925209,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304068.189261,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304228.620395,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304535.187873,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304842.51813,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304903,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304970,
+            "followers": 0
+        }
+    ],
+    "binance": [
+        {
+            "timestamp": 1739302202.715252,
+            "followers": 14000000
+        },
+        {
+            "timestamp": 1739302356.003164,
+            "followers": 14000000
+        },
+        {
+            "timestamp": 1739302723.094146,
+            "followers": 14000000
+        },
+        {
+            "timestamp": 1739303086.581537,
+            "followers": 14000000
+        },
+        {
+            "timestamp": 1739303450.597857,
+            "followers": 14000000
+        },
+        {
+            "timestamp": 1739303552.126119,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303756.57195,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303867.86443,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304068.2814,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304228.787043,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304534.890476,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304842.421193,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304903,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304970,
+            "followers": 0
+        }
+    ],
+    "dogecoin": [
+        {
+            "timestamp": 1739302207.86439,
+            "followers": 4300000
+        },
+        {
+            "timestamp": 1739302363.297521,
+            "followers": 4300000
+        },
+        {
+            "timestamp": 1739302727.455926,
+            "followers": 4300000
+        },
+        {
+            "timestamp": 1739303090.987462,
+            "followers": 4300000
+        },
+        {
+            "timestamp": 1739303455.061075,
+            "followers": 4300000
+        },
+        {
+            "timestamp": 1739303552.195902,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303756.5919,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303868.333798,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304068.259373,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304228.699418,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304535.264774,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304842.441746,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304903,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304970,
+            "followers": 0
+        }
+    ],
+    "cardano": [
+        {
+            "timestamp": 1739302220.029777,
+            "followers": 1400000
+        },
+        {
+            "timestamp": 1739302372.737323,
+            "followers": 1400000
+        },
+        {
+            "timestamp": 1739302736.829828,
+            "followers": 1400000
+        },
+        {
+            "timestamp": 1739303100.284426,
+            "followers": 1400000
+        },
+        {
+            "timestamp": 1739303464.36826,
+            "followers": 1400000
+        },
+        {
+            "timestamp": 1739303552.135117,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303756.616488,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303867.842005,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304068.218499,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304228.718297,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304535.177371,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304842.070618,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304903,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304970,
+            "followers": 0
+        }
+    ],
+    "solana": [
+        {
+            "timestamp": 1739302224.572264,
+            "followers": 3200000
+        },
+        {
+            "timestamp": 1739302377.057458,
+            "followers": 3200000
+        },
+        {
+            "timestamp": 1739302741.162422,
+            "followers": 3200000
+        },
+        {
+            "timestamp": 1739303104.684004,
+            "followers": 3200000
+        },
+        {
+            "timestamp": 1739303468.784487,
+            "followers": 3200000
+        },
+        {
+            "timestamp": 1739303552.179637,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303756.542146,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303867.876953,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304068.243145,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304228.685798,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304534.924939,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304842.42884,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304903,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304970,
+            "followers": 0
+        }
+    ],
+    "ripple": [
+        {
+            "timestamp": 1739302233.795011,
+            "followers": 3000000
+        },
+        {
+            "timestamp": 1739302386.259268,
+            "followers": 3000000
+        },
+        {
+            "timestamp": 1739302750.31088,
+            "followers": 3000000
+        },
+        {
+            "timestamp": 1739303113.878054,
+            "followers": 3000000
+        },
+        {
+            "timestamp": 1739303477.948014,
+            "followers": 3000000
+        },
+        {
+            "timestamp": 1739303552.205966,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303756.627994,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303867.910176,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304068.197785,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304228.633429,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304534.935936,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304842.082195,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304902,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304970,
+            "followers": 0
+        }
+    ],
+    "polkadot": [
+        {
+            "timestamp": 1739302238.711613,
+            "followers": 1500000
+        },
+        {
+            "timestamp": 1739302390.656851,
+            "followers": 1500000
+        },
+        {
+            "timestamp": 1739302754.626436,
+            "followers": 1500000
+        },
+        {
+            "timestamp": 1739303118.727531,
+            "followers": 1500000
+        },
+        {
+            "timestamp": 1739303482.255049,
+            "followers": 1500000
+        },
+        {
+            "timestamp": 1739303552.234595,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303756.642705,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303868.142013,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304068.206317,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304228.768519,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304535.66077,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304842.369581,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304904,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304970,
+            "followers": 0
+        }
+    ],
+    "avalanche": [
+        {
+            "timestamp": 1739302243.38704,
+            "followers": 672800
+        },
+        {
+            "timestamp": 1739302394.931647,
+            "followers": 672800
+        },
+        {
+            "timestamp": 1739302758.801732,
+            "followers": 672800
+        },
+        {
+            "timestamp": 1739303122.962457,
+            "followers": 672800
+        },
+        {
+            "timestamp": 1739303486.450528,
+            "followers": 672800
+        },
+        {
+            "timestamp": 1739303552.149356,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303756.546154,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303867.845039,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304068.293009,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304228.751187,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304534.88527,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304842.501469,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304902,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304970,
+            "followers": 0
+        }
+    ],
+    "chainlink": [
+        {
+            "timestamp": 1739302253.002844,
+            "followers": 1200000
+        },
+        {
+            "timestamp": 1739302404.089541,
+            "followers": 1200000
+        },
+        {
+            "timestamp": 1739302768.068417,
+            "followers": 1200000
+        },
+        {
+            "timestamp": 1739303132.087803,
+            "followers": 1200000
+        },
+        {
+            "timestamp": 1739303495.65992,
+            "followers": 1200000
+        },
+        {
+            "timestamp": 1739303551.995971,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303756.664653,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739303868.151142,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304068.179255,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304228.739041,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304535.769652,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304842.379198,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304900,
+            "followers": 0
+        },
+        {
+            "timestamp": 1739304970,
+            "followers": 0
+        }
+    ]
+}
