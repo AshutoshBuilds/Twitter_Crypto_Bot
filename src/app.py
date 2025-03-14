@@ -27,6 +27,7 @@ project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
 from src.utils.twitter_scraper import TwitterScraper
+from src.utils.database import save_twitter_stats, get_latest_leaderboard, get_historical_data, import_existing_json_data
 
 # Enable nested event loops
 nest_asyncio.apply()
@@ -128,14 +129,9 @@ async def update_leaderboard():
                         current_leaderboard = process_leaderboard_data(twitter_data, market_data)
                         last_update = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                         
-                        # Save data to file
-                        data_file = os.path.join('src/data', 'leaderboard.json')
-                        os.makedirs(os.path.dirname(data_file), exist_ok=True)
-                        with open(data_file, 'w', encoding='utf-8') as f:
-                            json.dump({
-                                'timestamp': last_update,
-                                'data': current_leaderboard
-                            }, f, indent=2, ensure_ascii=False)
+                        # Save data to database instead of JSON file
+                        for entry in current_leaderboard:
+                            save_twitter_stats(entry)
                 
                 # Sleep for 5 minutes (300 seconds)
                 await asyncio.sleep(300)
@@ -163,6 +159,9 @@ def process_leaderboard_data(twitter_data, market_data):
             'bio': data.get('bio', ''),
             'verified': data.get('verified', False),
             'followers_count': data.get('followers_count', 0),
+            'following_count': data.get('following_count', 0),
+            'tweets_count': data.get('tweets_count', 0),
+            'location': data.get('location', ''),
             'market_cap': market_info.get('market_cap', 0),
             'price': market_info.get('price', 0),
             'price_change_24h': market_info.get('price_change_24h', 0),
@@ -177,6 +176,8 @@ def process_leaderboard_data(twitter_data, market_data):
             'growth_24h': growth_metrics.get('change_24h', 0),
             'growth_status': determine_growth_status(growth_metrics),
             'engagement_rate': data.get('engagement_rate', 0),
+            'engagement_details': data.get('engagement_details', {}),
+            'created_at': datetime.now().strftime('%Y-%m-%d'),
             'twitter_score': calculate_twitter_score(
                 data.get('followers_count', 0),
                 data.get('engagement_rate', 0),
@@ -251,96 +252,107 @@ def run_async_update():
             event_loop = asyncio.new_event_loop()
             asyncio.set_event_loop(event_loop)
         
-        # Run the update task
-        event_loop.run_until_complete(update_leaderboard())
+        # Create and run update task
+        update_task = event_loop.create_task(update_leaderboard())
+        event_loop.run_forever()
     except Exception as e:
-        print(f"Error in async update: {str(e)}")
+        logger.error(f"Error in async update: {str(e)}")
     finally:
         if event_loop and not event_loop.is_closed():
-            try:
-                # Clean up any pending tasks
-                pending = asyncio.all_tasks(event_loop)
-                event_loop.run_until_complete(asyncio.gather(*pending))
-            except:
-                pass
             event_loop.close()
-            event_loop = None
 
 @app.route('/')
 def index():
-    """Render the leaderboard page"""
-    global current_leaderboard, last_update
-    
+    """Render the main leaderboard page"""
     try:
-        with update_lock:
-            formatted_data = []
-            for entry in current_leaderboard:
-                # Flatten the nested data structure
-                formatted_entry = {
-                    'username': entry['username'],
-                    'verified': entry['verified'],
-                    'bio': entry['bio'],
-                    'followers_count': entry['followers_count'],
-                    'twitter_score': entry['twitter_score'],
-                    'engagement_rate': entry['engagement_rate'],
-                    'price': entry['price'],
-                    'price_change_24h': entry['price_change_24h'],
-                    'market_cap': entry['market_cap'],
-                    'growth_5m': entry.get('growth_5m', 0),
-                    'growth_15m': entry.get('growth_15m', 0),
-                    'growth_30m': entry.get('growth_30m', 0),
-                    'growth_1h': entry.get('growth_1h', 0),
-                    'growth_4h': entry.get('growth_4h', 0),
-                    'growth_6h': entry.get('growth_6h', 0),
-                    'growth_12h': entry.get('growth_12h', 0),
-                    'growth_18h': entry.get('growth_18h', 0),
-                    'growth_24h': entry.get('growth_24h', 0),
-                    'growth_status': entry['growth_status'],
-                    'hourly_rate': entry.get('growth_1h', 0),
-                    'is_spiking': entry.get('growth_1h', 0) >= 10
-                }
-                formatted_data.append(formatted_entry)
-            
-            return render_template('index.html',
-                                leaderboard=formatted_data,
-                                last_update=last_update)
+        # Get leaderboard data from database
+        leaderboard_data = get_latest_leaderboard()
+        
+        # If no data in database, use current_leaderboard
+        if not leaderboard_data and current_leaderboard:
+            leaderboard_data = current_leaderboard
+        
+        # Sort by Twitter score (descending)
+        leaderboard_data.sort(key=lambda x: x.get('twitter_score', 0), reverse=True)
+        
+        # Get timestamp
+        timestamp = last_update or datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        
+        # Render template with data
+        return render_template(
+            'index.html',
+            leaderboard=leaderboard_data,
+            last_update=timestamp,
+            alerts=alerts
+        )
     except Exception as e:
-        logger.error(f"Error rendering template: {str(e)}")
-        return "Error loading leaderboard", 500
+        logger.error(f"Error rendering index: {str(e)}")
+        return render_template(
+            'index.html',
+            leaderboard=[],
+            last_update=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            alerts=[f"Error loading data: {str(e)}"]
+        )
 
 @app.route('/api/leaderboard')
 def get_leaderboard():
     """API endpoint to get leaderboard data"""
-    return jsonify({
-        'timestamp': last_update,
-        'data': current_leaderboard
-    })
+    try:
+        # Get leaderboard data from database
+        leaderboard_data = get_latest_leaderboard()
+        
+        # If no data in database, use current_leaderboard
+        if not leaderboard_data and current_leaderboard:
+            leaderboard_data = current_leaderboard
+            
+        return jsonify({
+            'timestamp': last_update or datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'data': leaderboard_data
+        })
+    except Exception as e:
+        logger.error(f"Error in API: {str(e)}")
+        return jsonify({
+            'error': str(e),
+            'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'data': []
+        }), 500
+
+@app.route('/api/history/<username>')
+def get_user_history(username):
+    """API endpoint to get historical data for a specific user"""
+    try:
+        # Get historical data from database
+        history_data = get_historical_data(username)
+        
+        return jsonify({
+            'username': username,
+            'history': history_data
+        })
+    except Exception as e:
+        logger.error(f"Error getting history for {username}: {str(e)}")
+        return jsonify({
+            'error': str(e),
+            'username': username,
+            'history': []
+        }), 500
 
 def start_background_tasks():
-    """Start all background tasks"""
-    global event_loop
+    """Start background tasks"""
+    # Import existing JSON data into the database
+    import_existing_json_data()
     
-    # Ensure any existing event loop is closed
-    if event_loop and not event_loop.is_closed():
-        event_loop.close()
-        event_loop = None
-    
-    # Initialize scraper first
+    # Initialize scraper
     if initialize_scraper():
-        # Start the background update thread
-        update_thread = threading.Thread(target=run_async_update, daemon=True)
+        # Start update thread
+        update_thread = threading.Thread(target=run_async_update)
+        update_thread.daemon = True
         update_thread.start()
     else:
-        print("Failed to initialize scraper, background tasks not started")
+        logger.error("Failed to initialize scraper, background tasks not started")
 
 if __name__ == '__main__':
     # Start background tasks
     start_background_tasks()
     
-    # Check if running on Windows
-    if os.name == 'nt':
-        # On Windows, run without debug mode to avoid multiprocessing issues
-        app.run(host='0.0.0.0', port=5000, debug=False)
-    else:
-        # On other platforms, debug mode can be used
-        app.run(host='0.0.0.0', port=5000, debug=True)
+    # Run Flask app
+    app.run(host='0.0.0.0', port=5000)

@@ -186,6 +186,9 @@
                                     <div class="text-xs text-slate-500 mt-1">
                                         Engagement: {{ "{:.1f}%".format(entry.engagement_rate * 100) }}
                                     </div>
+                                    <div class="text-xs mt-2 {% if entry.follower_change > 0 %}text-green-600{% elif entry.follower_change < 0 %}text-red-600{% else %}text-slate-500{% endif %}">
+                                        {% if entry.follower_change > 0 %}+{% endif %}{{ entry.follower_change | format_number }} followers
+                                    </div>
                                 </div>
                             </td>
 
@@ -241,6 +244,127 @@
             </div>
         </div>
     </div>
+
+    <!-- Historical Data Section -->
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">Historical Follower Data</h2>
+        <p class="text-slate-600 mb-6">Click on an account to view historical follower data</p>
+        
+        <div id="historicalChart" class="bg-white rounded-xl shadow-sm p-6 h-80">
+            <p class="text-center text-slate-500">Select an account from the table above to view historical data</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Historical data chart
+        let historicalChart = null;
+        
+        // Function to fetch and display historical data
+        async function fetchHistoricalData(username) {
+            try {
+                const response = await fetch(`/api/history/${username}`);
+                const data = await response.json();
+                
+                if (data.history && data.history.length > 0) {
+                    displayHistoricalChart(username, data.history);
+                } else {
+                    document.getElementById('historicalChart').innerHTML = 
+                        `<p class="text-center text-slate-500">No historical data available for ${username}</p>`;
+                }
+            } catch (error) {
+                console.error('Error fetching historical data:', error);
+                document.getElementById('historicalChart').innerHTML = 
+                    `<p class="text-center text-red-500">Error loading historical data</p>`;
+            }
+        }
+        
+        // Function to display historical chart
+        function displayHistoricalChart(username, historyData) {
+            const chartContainer = document.getElementById('historicalChart');
+            chartContainer.innerHTML = '<canvas id="followerChart"></canvas>';
+            
+            const ctx = document.getElementById('followerChart').getContext('2d');
+            
+            // Prepare data for chart
+            const labels = historyData.map(item => {
+                const date = new Date(item.timestamp);
+                return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            });
+            
+            const followerCounts = historyData.map(item => item.followers_count);
+            
+            // Destroy existing chart if it exists
+            if (historicalChart) {
+                historicalChart.destroy();
+            }
+            
+            // Create new chart
+            historicalChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `${username} Followers`,
+                        data: followerCounts,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `Follower History for @${username}`,
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Followers'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Add click event listeners to table rows
+        document.addEventListener('DOMContentLoaded', function() {
+            const tableRows = document.querySelectorAll('.table-row');
+            tableRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    const username = this.querySelector('.text-sm.font-medium').textContent.trim();
+                    fetchHistoricalData(username);
+                    
+                    // Highlight selected row
+                    tableRows.forEach(r => r.classList.remove('bg-blue-50'));
+                    this.classList.add('bg-blue-50');
+                });
+            });
+        });
+    </script>
 
     <script>
         // Tooltip for Twitter Score
