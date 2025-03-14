@@ -27,7 +27,7 @@ project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
 from src.utils.twitter_scraper import TwitterScraper
-from src.utils.database import save_twitter_stats, get_latest_leaderboard, get_historical_data, import_existing_json_data
+from src.utils.database import save_twitter_stats, get_latest_leaderboard, get_historical_data, import_existing_json_data, cleanup_json_files
 
 # Enable nested event loops
 nest_asyncio.apply()
@@ -340,6 +340,9 @@ def start_background_tasks():
     """Start background tasks"""
     # Import existing JSON data into the database
     import_existing_json_data()
+    
+    # Clean up old JSON files after importing
+    cleanup_json_files(keep_current=True)
     
     # Initialize scraper
     if initialize_scraper():

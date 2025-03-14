@@ -384,16 +384,26 @@
             tooltip.style.display = 'none';
         });
 
-        // Auto-refresh every 5 minutes
-        setInterval(function() {
+        // Auto-refresh functionality
+        function refreshData() {
             fetch('/api/leaderboard')
                 .then(response => response.json())
                 .then(data => {
-                    if (data.data) {
-                        window.location.reload();
+                    if (data && data.timestamp) {
+                        const currentTimestamp = document.querySelector('.text-sm.text-slate-500.bg-white').textContent.replace('Last updated: ', '').trim();
+                        if (data.timestamp !== currentTimestamp) {
+                            console.log('New data available, refreshing page...');
+                            window.location.reload();
+                        } else {
+                            console.log('No new data available');
+                        }
                     }
-                });
-        }, 300000);
+                })
+                .catch(error => console.error('Error checking for updates:', error));
+        }
+
+        // Check for updates every 30 seconds
+        setInterval(refreshData, 30000);
     </script>
 </body>
 </html>

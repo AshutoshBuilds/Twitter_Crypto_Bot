@@ -339,6 +339,7 @@ def import_existing_json_data():
     
     # Look for leaderboard.json and any historical files
     json_files = [f for f in os.listdir(data_dir) if f.endswith('.json')]
+    imported_files = []
     
     for json_file in json_files:
         file_path = os.path.join(data_dir, json_file)
@@ -406,8 +407,44 @@ def import_existing_json_data():
                 save_twitter_stats(stats_copy)
             
             logger.info(f"Imported data from {json_file}")
+            imported_files.append(file_path)
         except Exception as e:
             logger.error(f"Error importing data from {json_file}: {str(e)}")
+    
+    return imported_files
+
+def cleanup_json_files(keep_current=True):
+    """Delete old JSON files after they've been imported to the database
+    
+    Args:
+        keep_current (bool): If True, keeps the current leaderboard.json file
+    """
+    data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+    
+    # Get list of JSON files
+    json_files = [f for f in os.listdir(data_dir) if f.endswith('.json')]
+    
+    # Keep track of deleted files
+    deleted_files = []
+    
+    for json_file in json_files:
+        # Skip the current leaderboard file if requested
+        if keep_current and json_file == 'leaderboard.json':
+            continue
+            
+        # Skip follower_history.json as it might contain additional data
+        if json_file == 'follower_history.json':
+            continue
+            
+        file_path = os.path.join(data_dir, json_file)
+        try:
+            os.remove(file_path)
+            deleted_files.append(json_file)
+            logger.info(f"Deleted old JSON file: {json_file}")
+        except Exception as e:
+            logger.error(f"Error deleting {json_file}: {str(e)}")
+    
+    return deleted_files
 
 # Initialize the database when the module is imported
 init_db() 
